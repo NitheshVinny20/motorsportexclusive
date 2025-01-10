@@ -102,8 +102,8 @@ document.getElementById("searchButton").addEventListener("click", function () {
 });
 
 // Date Selection
-
+document.getElementById("dateSelector").addEventListener("change", function () {
+  const selectedDate = this.value;
+  const filteredNews = newsItems.filter((item) => item.date === selectedDate);
   loadNews(filteredNews);
 });
-exports.default = series(SCSSTask, jsTask, browserSyncServe, WatchTask);
-exports.build = series(SCSSTask, jsTask);
