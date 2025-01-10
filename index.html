@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Motorsport News 24/7</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Motorsport News 24/7</h1>
+    </header>
+
+    <nav>
+      <form id="searchForm">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search motorsport news..."
+        />
+        <button type="button" id="searchButton">Search</button>
+        <div class="loader" id="loader"></div>
+      </form>
+      <div class="date-selector">
+        <label for="dateSelector">Select Date:</label>
+        <input type="date" id="dateSelector" />
+      </div>
+      <div id="suggestions" class="suggestions"></div>
+    </nav>
+
+    <div class="news-container" id="newsContent">
+      <!-- News items will be dynamically inserted here -->
+    </div>
+
+    <footer>
+      <p>© 2025 Motorsport News 24/7</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
