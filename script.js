@@ -107,3 +107,5 @@ document.getElementById("dateSelector").addEventListener("change", function () {
   const filteredNews = newsItems.filter((item) => item.date === selectedDate);
   loadNews(filteredNews);
 });
+exports.default = series(SCSSTask, jsTask, browserSyncServe, WatchTask);
+exports.build = series(SCSSTask, jsTask);
