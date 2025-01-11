@@ -10,7 +10,46 @@ header {
   background-color: #ff0000;
   color: white;
   padding: 1em;
-  text-align: center;
+  text-align: left;
+  position: relative;
+}
+
+header h1 {
+  margin: 0 0 0.5em 0;
+}
+
+header a {
+  text-decoration: none;
+  color: black;
+}
+
+.category-links {
+  background-color: #ffffff;
+  position: relative;
+}
+
+.category-links a {
+  padding: 5px;
+  color: black;
+}
+
+.category-links a:hover {
+  color: #ff0000;
+}
+
+.category-links h2,
+.category-links h3,
+.category-links h4,
+.category-links h5,
+.category-links h6,
+.category-links h7,
+.category-links h8,
+.category-links h8,
+.category-links h10 {
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+  display: inline;
 }
 
 nav {
