@@ -1,36 +1,51 @@
-// Set the target date
-const targetDate = new Date("February 22, 2025 00:00:00").getTime();
+// Dropdown menu functionality
+function toggleMenu() {
+  const menu = document.getElementById("menu");
+  const menuToggle = document.querySelector(".menu-toggle");
 
-function updateTimer() {
-  const now = new Date().getTime();
-  const distance = targetDate - now;
+  // Toggle the 'show' class to open/close the menu
+  menu.classList.toggle("show");
 
-  if (distance >= 0) {
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    document.getElementById("days").textContent = days
-      .toString()
-      .padStart(2, "0");
-    document.getElementById("hours").textContent = hours
-      .toString()
-      .padStart(2, "0");
-    document.getElementById("minutes").textContent = minutes
-      .toString()
-      .padStart(2, "0");
-    document.getElementById("seconds").textContent = seconds
-      .toString()
-      .padStart(2, "0");
-  } else {
-    document.querySelector(".timer").innerHTML =
-      "<h2>The Race Has Begun! 🏁</h2>";
-  }
+  // Update aria-expanded attribute for accessibility
+  const isExpanded = menu.classList.contains("show");
+  menuToggle.setAttribute("aria-expanded", isExpanded);
 }
 
-// Update the timer every second
-setInterval(updateTimer, 1000);
-updateTimer();
+// Close menu when clicking/tapping outside
+document.addEventListener("click", function (event) {
+  const menu = document.getElementById("menu");
+  const menuToggle = document.querySelector(".menu-toggle");
+
+  // Close the menu if the click/tap is outside the menu and hamburger icon
+  if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+    menu.classList.remove("show");
+    menuToggle.setAttribute("aria-expanded", "false");
+  }
+});
+
+// Close menu when tapping on a menu item (optional, for better UX on mobile)
+document.getElementById("menu").addEventListener("click", function (event) {
+  const menu = document.getElementById("menu");
+  const menuToggle = document.querySelector(".menu-toggle");
+
+  // If the user taps a menu item (link), close the menu
+  if (event.target.tagName === "A") {
+    menu.classList.remove("show");
+    menuToggle.setAttribute("aria-expanded", "false");
+  }
+});
+
+// Remove onmouseleave for mobile (optional, but recommended)
+function closeMenu() {
+  const menu = document.getElementById("menu");
+  const menuToggle = document.querySelector(".menu-toggle");
+  menu.classList.remove("show");
+  menuToggle.setAttribute("aria-expanded", "false");
+}
+
+// Optional: Detect touch devices and adjust behavior
+const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+if (!isTouchDevice) {
+  // Only use onmouseleave for non-touch devices (desktop)
+  document.getElementById("menu").addEventListener("mouseleave", closeMenu);
+}
