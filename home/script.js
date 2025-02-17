@@ -105,3 +105,36 @@ function toggleMenu() {
   // Update aria-expanded attribute
   menuToggle.setAttribute("aria-expanded", menu.classList.contains("show"));
 }
+function toggleMenu() {
+  const menu = document.getElementById("menu");
+  const menuToggle = document.querySelector(".menu-toggle");
+
+  // Toggle menu visibility
+  menu.classList.toggle("show");
+
+  // Change button icon based on menu state
+  if (menu.classList.contains("show")) {
+    menuToggle.innerHTML = "&times;"; // Close icon (✖)
+  } else {
+    menuToggle.innerHTML = "&#9776;"; // Hamburger icon (☰)
+  }
+}
+
+// Close menu function
+function closeMenu() {
+  const menu = document.getElementById("menu");
+  const menuToggle = document.querySelector(".menu-toggle");
+
+  menu.classList.remove("show");
+  menuToggle.innerHTML = "&#9776;"; // Reset to hamburger icon
+}
+
+// Close menu when clicking outside
+document.addEventListener("click", function (event) {
+  const menu = document.getElementById("menu");
+  const menuToggle = document.querySelector(".menu-toggle");
+
+  if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+    closeMenu();
+  }
+});
