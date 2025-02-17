@@ -2,11 +2,11 @@
 
 body {
   font-family: "Orbitron", sans-serif;
-  background-color: #2a2a2a; /* Darker silver-grey */
+  background-color: #2a2a2a;
   background-image: linear-gradient(
       45deg,
       rgba(0, 255, 128, 0.1) 25%,
-      /* Soft green tint */ transparent 25%,
+      transparent 25%,
       transparent 75%,
       rgba(0, 255, 128, 0.1) 75%
     ),
@@ -17,9 +17,9 @@ body {
       transparent 75%,
       rgba(0, 255, 128, 0.1) 75%
     );
-  background-size: 10px 10px; /* Maintains carbon fiber texture */
-  background-blend-mode: overlay; /* Subtle textured effect */
-  color: #d0d0d0; /* Soft silver text */
+  background-size: 10px 10px;
+  background-blend-mode: overlay;
+  color: #d0d0d0;
   margin: 0;
   padding: 0;
 }
@@ -30,6 +30,7 @@ header {
   text-align: center;
   box-shadow: 0 2px 10px rgba(255, 0, 0, 0.5);
   position: relative;
+  z-index: 1; /* Ensure header is behind popup */
 }
 
 header h1 {
@@ -39,18 +40,17 @@ header h1 {
   text-decoration: none;
   text-align: left;
 }
+
 header a {
   text-decoration: none;
 }
 
-/* Reduce heading size on large screens */
 @media (min-width: 1024px) {
   header h1 {
     font-size: 2em;
   }
 }
 
-/* Reduce heading size for small screens */
 @media (max-width: 768px) {
   header h1 {
     font-size: 1.5em;
@@ -80,6 +80,7 @@ header a {
   box-shadow: 0 2px 5px rgba(255, 0, 0, 0.5);
   padding: 10px 0;
   max-height: 500px;
+  z-index: 1000;
 }
 
 .category-links a {
@@ -95,7 +96,6 @@ header a {
   background: #ff0000;
 }
 
-/* Hide menu by default for smaller screens */
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
@@ -115,7 +115,17 @@ header a {
   }
 }
 
-/* Side-by-side boxes for news */
+/* Hide menu on large screens */
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none;
+  }
+
+  .category-links {
+    display: none;
+  }
+}
+
 .news-container {
   padding: 2em;
   display: flex;
@@ -133,14 +143,12 @@ header a {
   min-width: 300px;
 }
 
-/* Ensure at least 2 boxes per row on large screens */
 @media (min-width: 768px) {
   .news-item {
     max-width: 48%;
   }
 }
 
-/* Ensure 3 boxes per row on extra-large screens */
 @media (min-width: 1024px) {
   .news-item {
     max-width: 30%;
@@ -156,8 +164,8 @@ footer {
   background-color: #ff0000;
   color: white;
   text-align: center;
-  padding: 1px; /* Reduced padding */
-  font-size: 12px; /* Smaller text */
+  padding: 1px;
+  font-size: 12px;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -197,56 +205,32 @@ footer {
   border: 1px solid #f70303;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  z-index: 1000;
+  z-index: 9999; /* Ensure the popup is on top of header and fund section */
   text-align: center;
   animation: fadeIn 0.5s;
   color: white;
 }
+
 .company-info {
   background-color: dimgrey;
-  padding: 20px; /* Adds space inside the box */
-  border-radius: 10px; /* Rounds the corners */
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); /* Adds a shadow for depth */
-  border: 2px solid #444; /* Adds a slight border */
-  width: fit-content; /* Adjusts the width to fit the content */
-  margin: 20px auto; /* Centers the box */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+  border: 2px solid #444;
+  width: fit-content;
+  margin: 20px auto;
   text-align: center;
-}
-
-.right-section {
-  position: absolute;
-  right: 0px;
-  top: 120px; /* Adjust this value to move it further down */
-  width: 220px; /* Adjust width as needed */
-}
-
-.fund {
-  background: rgba(0, 0, 0, 0.8);
-  padding: 15px;
-  color: white;
-  font-size: 14px;
-  text-align: center; /* Change this as needed */
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-.category-links {
-  position: absolute;
-  top: 60px; /* Adjust based on your header height */
-  left: 0;
-  width: 100%;
-  background-color: black; /* Or your menu background color */
-  z-index: 1000; /* Ensure menu stays on top */
 }
 
 .info-symbol {
   position: relative;
   display: inline-block;
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+/Edge */
-  user-select: none; /* Standard */
-  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
-  touch-action: manipulation; /* Prevent default touch actions */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .info-popup {
@@ -258,7 +242,7 @@ footer {
   border-radius: 6px;
   padding: 8px;
   position: absolute;
-  z-index: 10;
+  z-index: 2000;
   bottom: 125%;
   left: 50%;
   transform: translateX(-50%);
@@ -282,10 +266,98 @@ footer {
   opacity: 1;
 }
 
-.right-section {
-  z-index: 5; /* Lower than menu */
+@media (min-width: 769px) {
+  .info-popup {
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
-.fund {
-  /* Add any specific styling for fund section */
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0px 2px 0 25px;
+  margin-top: 10px;
+  position: relative;
+  z-index: 5;
+}
+
+.latest-section {
+  display: flex;
+  align-items: center;
+  color: red;
+  font-size: 25px;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.fund-section {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 5px;
+  width: 220px;
+  flex-shrink: 0;
+  z-index: 2; /* Lower z-index so the popup overlays */
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px 2px 0 10px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .latest-section {
+    flex-basis: calc(100% - 225px);
+    margin-right: 5px;
+    font-size: 20px;
+  }
+
+  .fund-section {
+    flex-basis: 220px;
+    font-size: 12px;
+  }
+}
+
+.right-section {
+  display: none;
+}
+/* Hide menu toggle on larger screens */
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none;
+  }
+
+  /* Ensure menu is always visible on larger screens */
+  .category-links {
+    display: flex !important;
+    max-height: none !important;
+    position: static;
+    background: black;
+    box-shadow: 0 2px 5px rgba(255, 0, 0, 0.5);
+  }
+
+  /* Adjust info popup positioning for larger screens */
+  .info-popup {
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Ensure info popup stays above other elements */
+.info-popup {
+  z-index: 2000;
+}
+
+/* Fix menu z-index to be above other content */
+.category-links {
+  z-index: 1000;
 }
