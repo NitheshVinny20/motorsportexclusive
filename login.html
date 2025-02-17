@@ -3,186 +3,99 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BMW Motorsport Login</title>
+    <title>Terms and Conditions</title>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
-
       body {
-        font-family: "Orbitron", sans-serif;
-        background: linear-gradient(
-          135deg,
-          #000428,
-          #004e92
-        ); /* BMW M blue shades */
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        overflow: hidden;
-      }
-
-      .login-box {
-        background: rgba(0, 0, 0, 0.9);
-        padding: 40px;
-        border-radius: 15px;
-        box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
-        text-align: center;
-        position: relative;
-        width: 320px;
-        border: 3px solid #0072ff;
-        overflow: hidden;
-      }
-
-      .login-box h2 {
-        font-size: 24px;
-        font-weight: bold;
-        color: #fff;
-        margin-bottom: 20px;
-        position: relative;
-        z-index: 2;
-      }
-
-      input {
-        display: block;
-        width: 90%;
-        padding: 12px;
-        margin: 10px auto;
-        border: none;
-        border-radius: 8px;
+        font-family: Arial, sans-serif;
         background: #222;
         color: #fff;
-        font-size: 16px;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: auto;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      }
+      h1,
+      h2 {
         text-align: center;
-        outline: none;
-        position: relative;
-        z-index: 2;
+        color: #f39c12;
       }
-
-      button {
-        background: #ff3131;
-        color: white;
-        border: none;
-        padding: 12px 24px;
-        cursor: pointer;
-        font-size: 16px;
-        border-radius: 8px;
-        transition: 0.3s ease-in-out;
-        width: 100%;
-        margin-top: 10px;
-        font-weight: bold;
-        text-transform: uppercase;
-        position: relative;
-        z-index: 2;
+      p {
+        line-height: 1.6;
       }
-
-      button:hover {
-        background: #d40000;
-      }
-
-      #message {
-        margin-top: 15px;
-        font-size: 16px;
-        display: none;
-        position: relative;
-        z-index: 2;
-      }
-
-      /* Floating BMW Motorsport stripes inside the box */
-      .bmw-stripes {
-        position: absolute;
-        width: 200%;
-        height: 100%;
-        top: 0;
-        left: -100%;
-        background: linear-gradient(
-          90deg,
-          rgba(0, 78, 146, 0.2),
-          rgba(0, 114, 255, 0.2),
-          rgba(255, 49, 49, 0.2)
-        );
-        transform: skewX(-20deg);
-        animation: moveStripes 3s infinite linear;
-      }
-
-      @keyframes moveStripes {
-        0% {
-          left: -100%;
-        }
-        100% {
-          left: 0;
-        }
-      }
-
-      /* Loading animation */
-      #loading {
-        display: none;
-        font-size: 20px;
-        color: white;
-        margin-top: 10px;
-        animation: blink 1s infinite alternate;
-        position: relative;
-        z-index: 2;
-      }
-
-      @keyframes blink {
-        from {
-          opacity: 1;
-        }
-        to {
-          opacity: 0.5;
-        }
+      ul {
+        padding-left: 20px;
       }
     </style>
   </head>
   <body>
-    <div class="login-box">
-      <div class="bmw-stripes"></div>
-      <h2>🏎️ Motorsport Login</h2>
-      <input type="text" id="username" placeholder="Enter Username" />
-      <input type="password" id="password" placeholder="Enter Password" />
-      <button onclick="validateLogin()">Login</button>
-      <p id="message"></p>
-      <p id="loading">🏎️ Loading...</p>
+    <div class="container">
+      <h1>Terms and Conditions</h1>
+      <p><strong>Last Updated:</strong> [Date]</p>
+
+      <h2>1. Acceptance of Terms</h2>
+      <p>
+        By accessing or using this website, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you must not use our website.
+      </p>
+
+      <h2>2. Content & Copyright</h2>
+      <ul>
+        <li>
+          All content on this website, including text, images, graphics, and other materials, is the property of Motorsport Exclusive or its licensors and is protected by copyright and other intellectual property laws.
+        </li>
+        <li>
+          You may not reproduce, distribute, modify, or use any content from this website without prior written permission from Motorsport Exclusive.
+        </li>
+        <li>
+          If you believe that any content on this website infringes on your copyrights, please contact us at [Your Contact Email] with details of the infringement.
+        </li>
+      </ul>
+
+      <h2>3. User Conduct</h2>
+      <ul>
+        <li>
+          You agree to use this website only for lawful purposes and in a manner that does not infringe the rights of, or restrict or inhibit the use and enjoyment of the website by, any third party.
+        </li>
+        <li>
+          You must not post or share any content that is illegal, harmful, offensive, or otherwise inappropriate.
+        </li>
+        <li>
+          You must not attempt to hack, disrupt, or misuse the website or any of its services.
+        </li>
+        <li>
+          You must comply with all applicable laws and regulations while using our website.
+        </li>
+      </ul>
+
+      <h2>4. External Links</h2>
+      <p>
+        This website may contain links to third-party websites. These links are provided for your convenience and do not imply endorsement, affiliation, or sponsorship of those sites. We are not responsible for the content, privacy policies, or practices of any third-party websites.
+      </p>
+
+      <h2>5. Limitation of Liability</h2>
+      <p>
+        Motorsport Exclusive does not guarantee the accuracy, completeness, or reliability of any content on this website. We are not liable for any direct, indirect, incidental, consequential, or punitive damages arising out of your use of or inability to use this website.
+      </p>
+
+      <h2>6. Privacy Policy</h2>
+      <p>
+        Your use of this website is also governed by our <strong>Privacy Policy</strong>, which explains how we collect, use, and protect your personal data. By using this website, you consent to the collection and use of your data as described in our Privacy Policy.
+      </p>
+
+      <h2>7. Changes to Terms</h2>
+      <p>
+        Motorsport Exclusive reserves the right to modify these Terms and Conditions at any time. Any changes will be posted on this page, and your continued use of the website after such changes are posted constitutes your acceptance of the modified terms.
+      </p>
+
+      <h2>8. Contact Us</h2>
+      <p>
+        If you have any questions or concerns regarding these Terms and Conditions, please contact us at <strong>[Your Contact Email]</strong>.
+      </p>
     </div>
-
-    <script>
-      function validateLogin() {
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-        const message = document.getElementById("message");
-        const loading = document.getElementById("loading");
-
-        if (!username || !password) {
-          message.innerHTML = "⚠️ Please enter all details!";
-          message.style.color = "red";
-          message.style.display = "block";
-          return;
-        }
-
-        message.style.display = "none";
-        loading.style.display = "block";
-
-        setTimeout(() => {
-          if (username === "1234" && password === "!@#$1234") {
-            window.location.href = "https://example.com";
-          } else {
-            loading.style.display = "none";
-            message.innerHTML =
-              "🏎️ <b>Pit Stop in Progress!🏁</br>⚙️user logins will be ready soon!🔧";
-            message.style.color = "#ffcc00";
-            message.style.display = "block";
-
-            setTimeout(() => {
-              message.innerHTML +=
-                '<br><span style="color: #ff4444;">Redirecting to home...</span>';
-              setTimeout(() => {
-                window.location.href = "index.html";
-              }, 2000);
-            }, 3000);
-          }
-        }, 3000);
-      }
-    </script>
   </body>
 </html>
