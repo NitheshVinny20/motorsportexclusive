@@ -217,7 +217,7 @@ footer {
   position: absolute;
   right: 0px;
   top: 120px; /* Adjust this value to move it further down */
-  width: 260px; /* Adjust width as needed */
+  width: 220px; /* Adjust width as needed */
 }
 
 .fund {
@@ -228,4 +228,64 @@ footer {
   text-align: center; /* Change this as needed */
   border-radius: 5px;
   margin-bottom: 10px;
+}
+.category-links {
+  position: absolute;
+  top: 60px; /* Adjust based on your header height */
+  left: 0;
+  width: 100%;
+  background-color: black; /* Or your menu background color */
+  z-index: 1000; /* Ensure menu stays on top */
+}
+
+.info-symbol {
+  position: relative;
+  display: inline-block;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+  touch-action: manipulation; /* Prevent default touch actions */
+}
+
+.info-popup {
+  visibility: hidden;
+  width: 200px;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 10;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.info-popup::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+.info-symbol:hover .info-popup {
+  visibility: visible;
+  opacity: 1;
+}
+
+.right-section {
+  z-index: 5; /* Lower than menu */
+}
+
+.fund {
+  /* Add any specific styling for fund section */
 }
