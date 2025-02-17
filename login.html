@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMW Motorsport Login</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
+
+      body {
+        font-family: "Orbitron", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #000428,
+          #004e92
+        ); /* BMW M blue shades */
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .login-box {
+        background: rgba(0, 0, 0, 0.9);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+        text-align: center;
+        position: relative;
+        width: 320px;
+        border: 3px solid #0072ff;
+        overflow: hidden;
+      }
+
+      .login-box h2 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #fff;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 2;
+      }
+
+      input {
+        display: block;
+        width: 90%;
+        padding: 12px;
+        margin: 10px auto;
+        border: none;
+        border-radius: 8px;
+        background: #222;
+        color: #fff;
+        font-size: 16px;
+        text-align: center;
+        outline: none;
+        position: relative;
+        z-index: 2;
+      }
+
+      button {
+        background: #ff3131;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 8px;
+        transition: 0.3s ease-in-out;
+        width: 100%;
+        margin-top: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+        position: relative;
+        z-index: 2;
+      }
+
+      button:hover {
+        background: #d40000;
+      }
+
+      #message {
+        margin-top: 15px;
+        font-size: 16px;
+        display: none;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Floating BMW Motorsport stripes inside the box */
+      .bmw-stripes {
+        position: absolute;
+        width: 200%;
+        height: 100%;
+        top: 0;
+        left: -100%;
+        background: linear-gradient(
+          90deg,
+          rgba(0, 78, 146, 0.2),
+          rgba(0, 114, 255, 0.2),
+          rgba(255, 49, 49, 0.2)
+        );
+        transform: skewX(-20deg);
+        animation: moveStripes 3s infinite linear;
+      }
+
+      @keyframes moveStripes {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 0;
+        }
+      }
+
+      /* Loading animation */
+      #loading {
+        display: none;
+        font-size: 20px;
+        color: white;
+        margin-top: 10px;
+        animation: blink 1s infinite alternate;
+        position: relative;
+        z-index: 2;
+      }
+
+      @keyframes blink {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0.5;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-box">
+      <div class="bmw-stripes"></div>
+      <h2>🏎️ Motorsport Login</h2>
+      <input type="text" id="username" placeholder="Enter Username" />
+      <input type="password" id="password" placeholder="Enter Password" />
+      <button onclick="validateLogin()">Login</button>
+      <p id="message"></p>
+      <p id="loading">🏎️ Loading...</p>
+    </div>
+
+    <script>
+      function validateLogin() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const message = document.getElementById("message");
+        const loading = document.getElementById("loading");
+
+        if (!username || !password) {
+          message.innerHTML = "⚠️ Please enter all details!";
+          message.style.color = "red";
+          message.style.display = "block";
+          return;
+        }
+
+        message.style.display = "none";
+        loading.style.display = "block";
+
+        setTimeout(() => {
+          if (username === "1234" && password === "!@#$1234") {
+            window.location.href = "https://example.com";
+          } else {
+            loading.style.display = "none";
+            message.innerHTML =
+              "🏎️ <b>Pit Stop in Progress!🏁</br>⚙️user logins will be ready soon!🔧";
+            message.style.color = "#ffcc00";
+            message.style.display = "block";
+
+            setTimeout(() => {
+              message.innerHTML +=
+                '<br><span style="color: #ff4444;">Redirecting to home...</span>';
+              setTimeout(() => {
+                window.location.href = "index.html";
+              }, 2000);
+            }, 3000);
+          }
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>
