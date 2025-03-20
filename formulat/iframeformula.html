@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Motorsport Exclusive - Formula</title>
+    <style>
+      /* Global Styles */
+      @import url("https://fonts.googleapis.com/css2?family=orbitron:wght@400;700&display=swap");
+
+      :root {
+        --bg-color: #2a2a2a;
+        --text-color: #d0d0d0;
+        --accent-color: #ff0000;
+        --shadow-color: rgba(255, 0, 0, 0.5);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Orbitron", sans-serif;
+        background: var(--bg-color);
+        color: var(--text-color);
+        overflow-x: hidden;
+        padding: 20px;
+      }
+
+      /* Headings */
+      p.heading {
+        text-align: center;
+        background: #000;
+        padding: 10px;
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 10px var(--shadow-color);
+      }
+
+      /* Image Sections */
+      .image-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 200px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        margin-bottom: 40px;
+        background: linear-gradient(
+          135deg,
+          rgba(26, 26, 26, 0.8),
+          rgba(45, 11, 58, 0.8)
+        );
+        border-radius: 10px;
+      }
+
+      .image-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .image-section a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
+
+      .image-section img {
+        max-width: 90%;
+        max-height: 200px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px var(--shadow-color);
+        transition: transform 0.3s ease, filter 0.3s ease;
+        object-fit: cover;
+      }
+
+      .image-section img:hover {
+        transform: scale(1.05);
+        filter: brightness(1.1);
+      }
+
+      /* Footer */
+      footer {
+        background: var(--accent-color);
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        font-size: 12px;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        box-shadow: 0 -2px 10px var(--shadow-color);
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .image-section img {
+          max-height: 150px;
+        }
+        p.heading {
+          font-size: 16px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .image-section img {
+          max-height: 120px;
+        }
+        p.heading {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <p class="heading">Formula 1</p>
+    <section class="image-section">
+      <a href="formulapage/formulapage.html" target="_top">
+        <img src="f1.jpg" alt="Formula 1" />
+      </a>
+    </section>
+
+    <p class="heading">Formula 2</p>
+    <section class="image-section">
+      <a href="https://example.com" target="_top">
+        <img src="f2.jpg" alt="Formula 2" />
+      </a>
+    </section>
+
+    <p class="heading">Formula 3</p>
+    <section class="image-section">
+      <a href="https://example.com" target="_top">
+        <img src="f3.jpg" alt="Formula 3" />
+      </a>
+    </section>
+
+    <p class="heading">F1 Academy</p>
+    <section class="image-section">
+      <a href="https://example.com" target="_top">
+        <img src="f1aca.jpg" alt="Formula 1 Academy" />
+      </a>
+    </section>
+
+    <footer>
+      <p>© 2025 Motorsport Exclusive.</p>
+    </footer>
+
+    <script>
+      // Scroll Animations
+      function handleScroll() {
+        const sections = document.querySelectorAll(".image-section");
+        const triggerPoint = window.innerHeight * 0.8;
+
+        sections.forEach((section) => {
+          const top = section.getBoundingClientRect().top;
+          if (top < triggerPoint) {
+            section.classList.add("visible");
+          } else {
+            section.classList.remove("visible");
+          }
+        });
+      }
+
+      window.addEventListener("scroll", handleScroll);
+      window.addEventListener("load", () => {
+        handleScroll(); // Trigger on load
+      });
+    </script>
+  </body>
+</html>

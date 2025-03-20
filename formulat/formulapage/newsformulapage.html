@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latest F1 News</title>
+    <style>
+      /* Global Styles */
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
+
+      :root {
+        --bg-color: #1a1a1a;
+        --text-color: #d0d0d0;
+        --accent-color: #ff0000;
+        --card-bg: rgba(34, 34, 34, 0.9);
+        --shadow-color: rgba(255, 0, 0, 0.5);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Orbitron", sans-serif;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        color: var(--text-color);
+        padding: 20px;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* News Container */
+      .news-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+
+      /* News Item */
+      .news-item {
+        background: var(--card-bg);
+        border-left: 4px solid var(--accent-color);
+        padding: 20px;
+        border-radius: 8px;
+        color: var(--text-color);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px var(--shadow-color);
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      .news-item.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .news-item:hover {
+        transform: translateY(-5px) scale(1.02);
+        border-left-color: #ff6666;
+        box-shadow: 0 6px 15px var(--shadow-color);
+        background: rgba(45, 45, 45, 0.9);
+      }
+
+      .news-item a {
+        text-decoration: none;
+        display: block;
+      }
+
+      .news-item h3 {
+        color: var(--accent-color);
+        margin: 0 0 10px 0;
+        font-size: 1.3em;
+        transition: color 0.3s ease;
+      }
+
+      .news-item:hover h3 {
+        color: #ff6666;
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .news-container {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+        .news-item {
+          padding: 15px;
+        }
+        .news-item h3 {
+          font-size: 1.2em;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 15px;
+        }
+        .news-item {
+          padding: 10px;
+        }
+        .news-item h3 {
+          font-size: 1.1em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="news-container">
+      <div class="news-item" id="news-item-1">
+        <a href="https://example.com/">
+          <h3>Content 1</h3>
+        </a>
+      </div>
+      <div class="news-item" id="news-item-2">
+        <a href="https://example.com/">
+          <h3>Content 2</h3>
+        </a>
+      </div>
+      <div class="news-item" id="news-item-3">
+        <a href="https://example.com/">
+          <h3>Content 3</h3>
+        </a>
+      </div>
+      <div class="news-item" id="news-item-4">
+        <a href="https://example.com/">
+          <h3>Content 4</h3>
+        </a>
+      </div>
+      <div class="news-item" id="news-item-5">
+        <a href="https://example.com/">
+          <h3>Content 5</h3>
+        </a>
+      </div>
+      <div class="news-item" id="news-item-6">
+        <a href="https://example.com/">
+          <h3>Content 6</h3>
+        </a>
+      </div>
+      <div class="news-item" id="news-item-7">
+        <a href="https://example.com/">
+          <h3>Content 7</h3>
+        </a>
+      </div>
+      <div class="news-item" id="news-item-8">
+        <a href="https://example.com/">
+          <h3>Content 8</h3>
+        </a>
+      </div>
+      <div class="news-item" id="news-item-9">
+        <a href="https://example.com/">
+          <h3>Content 9</h3>
+        </a>
+      </div>
+      <div class="news-item" id="news-item-10">
+        <a href="https://example.com/">
+          <h3>Content 10</h3>
+        </a>
+      </div>
+      <div class="news-item" id="news-item-11">
+        <a href="https://example.com/">
+          <h3>Content 11</h3>
+        </a>
+      </div>
+      <div class="news-item" id="news-item-12">
+        <a href="https://example.com/">
+          <h3>Content 12</h3>
+        </a>
+      </div>
+    </div>
+
+    <script>
+      // Scroll Animation
+      function handleScroll() {
+        const newsItems = document.querySelectorAll(".news-item");
+        const triggerPoint = window.innerHeight * 0.8;
+
+        newsItems.forEach((item) => {
+          const top = item.getBoundingClientRect().top;
+          if (top < triggerPoint) {
+            item.classList.add("visible");
+          } else {
+            item.classList.remove("visible");
+          }
+        });
+      }
+
+      window.addEventListener("scroll", handleScroll);
+      window.addEventListener("load", () => {
+        handleScroll(); // Trigger on load for items in view
+      });
+    </script>
+  </body>
+</html>

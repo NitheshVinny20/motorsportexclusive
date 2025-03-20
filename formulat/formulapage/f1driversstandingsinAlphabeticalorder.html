@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>F1 Driver Standings 2025 – Team Table</title>
+    <style>
+      /* Global Styles */
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
+
+      body {
+        font-family: "Orbitron", sans-serif;
+        background-color: #2a2a2a;
+        background-image: linear-gradient(
+            45deg,
+            rgba(0, 255, 128, 0.1) 25%,
+            transparent 25%,
+            transparent 75%,
+            rgba(0, 255, 128, 0.1) 75%
+          ),
+          linear-gradient(
+            -45deg,
+            rgba(0, 255, 128, 0.1) 25%,
+            transparent 25%,
+            transparent 75%,
+            rgba(0, 255, 128, 0.1) 75%
+          );
+        background-size: 10px 10px;
+        background-blend-mode: overlay;
+        color: #d0d0d0;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background: black;
+        padding: 15px 20px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(255, 0, 0, 0.5);
+        position: relative;
+        z-index: 1;
+      }
+
+      header h1 {
+        color: rgb(255, 255, 255);
+        margin: 0;
+        font-size: 1em;
+        text-align: left;
+      }
+
+      header a {
+        text-decoration: none;
+      }
+
+      @media (min-width: 1024px) {
+        header h1 {
+          font-size: 2em;
+        }
+      }
+      @media (max-width: 768px) {
+        header h1 {
+          font-size: 1.5em;
+        }
+      }
+
+      .menu-toggle {
+        font-size: 24px;
+        cursor: pointer;
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        background: none;
+        border: none;
+        color: white;
+      }
+
+      @media (min-width: 769px) {
+        .menu-toggle {
+          display: none;
+        }
+      }
+
+      .category-links {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: black;
+        box-shadow: 0 2px 5px rgba(255, 0, 0, 0.5);
+        padding: 10px 0;
+        max-height: 500px;
+        z-index: 1000;
+      }
+
+      .category-links a {
+        color: white;
+        font-size: 16px;
+        text-decoration: none;
+        padding: 8px 15px;
+        display: inline-block;
+        transition: background 0.3s;
+      }
+
+      .category-links a:hover {
+        background: #ff0000;
+      }
+
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: block;
+        }
+        .category-links {
+          display: none;
+          flex-direction: column;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease-in-out;
+        }
+        .category-links.show {
+          display: flex;
+          max-height: 500px;
+        }
+      }
+
+      /* Table Container */
+      .table-container {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 20px auto;
+      }
+
+      /* Filter Buttons */
+      .filter-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .filter {
+        border-radius: 15%;
+        background: black;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        box-shadow: 4px 4px 10px red;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .filter:hover {
+        border-radius: 50%;
+        box-shadow: 6px 6px 15px red;
+        font-size: larger;
+      }
+
+      /* Table Styling */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: rgba(34, 34, 34, 0.9);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #444;
+        transition: all 0.3s ease;
+      }
+
+      th {
+        background: #111;
+        color: #fff;
+        font-size: 1.2em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      tr:hover td {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.02);
+      }
+
+      .team-name {
+        font-weight: bold;
+        font-size: 1.1em;
+      }
+      .driver-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        object-fit: cover;
+        margin: 0 auto 5px;
+        display: block;
+      }
+      .points {
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+
+      /* Team-Specific Colors */
+      #alpine {
+        background-color: #0090d0;
+        color: #fff;
+      } /* Alpine Blue */
+      #alpine td {
+        border-color: #0055a4;
+      }
+      #alpine .team-name {
+        color: #fff;
+      }
+
+      #aston {
+        background-color: #00644b;
+        color: #fff;
+      } /* British Racing Green */
+      #aston td {
+        border-color: #003d2e;
+      }
+      #aston .team-name {
+        color: #c0d6b8;
+      }
+
+      #ferrari {
+        background-color: #ff2800;
+        color: #fff;
+      } /* Rosso Corsa */
+      #ferrari td {
+        border-color: #cc2200;
+      }
+      #ferrari .team-name {
+        color: #fff;
+      }
+
+      #haas {
+        background-color: #ffffff;
+        color: #000;
+      } /* White */
+      #haas td {
+        border-color: #cccccc;
+      }
+      #haas .team-name {
+        color: yellowgreen;
+      }
+
+      #mclaren {
+        background-color: #ff8000;
+        color: #fff;
+      } /* Papaya Orange */
+      #mclaren td {
+        border-color: #cc6600;
+      }
+      #mclaren .team-name {
+        color: #fff;
+      }
+
+      #mercedes {
+        background-color: #00d2be;
+        color: #000;
+      } /* Silver/Teal */
+      #mercedes td {
+        border-color: #00a896;
+      }
+      #mercedes .team-name {
+        color: #000;
+      }
+
+      #racingbulls {
+        background-color: #002d62;
+        color: #fff;
+      } /* Dark Blue */
+      #racingbulls td {
+        border-color: #001f43;
+      }
+      #racingbulls .team-name {
+        color: #ff0000;
+      }
+
+      #redbull {
+        background-color: #1e41ff;
+        color: #fff;
+      } /* Navy Blue */
+      #redbull td {
+        border-color: #1533cc;
+      }
+      #redbull .team-name {
+        color: #fff;
+      }
+
+      #sauber {
+        background-color: #0b1f18;
+        color: #fff;
+      } /* Dark Green/Black */
+      #sauber td {
+        border-color: #071411;
+      }
+      #sauber .team-name {
+        color: #e1bee7;
+      }
+
+      #williams {
+        background-color: #005aff;
+        color: #fff;
+      } /* Navy Blue */
+      #williams td {
+        border-color: #0044cc;
+      }
+      #williams .team-name {
+        color: #fff;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 600px) {
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+        thead {
+          display: none;
+        }
+        tr {
+          margin: 10px 0;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+          padding: 10px;
+        }
+        td {
+          border: none;
+          padding: 10px;
+          text-align: left;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        td::before {
+          content: attr(data-label);
+          font-weight: bold;
+          margin-right: 10px;
+          flex: 0 0 40%;
+        }
+        .team-name {
+          font-size: 1.2em;
+          text-align: center;
+          display: block;
+        }
+        .driver-image {
+          width: 40px;
+          height: 40px;
+        }
+        .points {
+          font-size: 1em;
+        }
+        td:nth-child(1) {
+          justify-content: center;
+        }
+        td:nth-child(2),
+        td:nth MILL-child(4) {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        td:nth-child(3),
+        td:nth-child(5) {
+          border-top: 1px solid #444;
+        }
+        tr:hover td {
+          transform: none;
+        }
+
+        /* Adjust text color for readability on mobile */
+        #alpine td::before,
+        #aston td::before,
+        #ferrari td::before,
+        #mclaren td::before,
+        #racingbulls td::before,
+        #redbull td::before,
+        #sauber td::before,
+        #williams td::before {
+          color: #fff;
+        }
+        #haas td::before,
+        #mercedes td::before {
+          color: #000;
+        }
+      }
+      /*boxx*/
+      /* Common container styling */
+      .standings-container {
+        margin-top: 40px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Desktop Table View */
+      #desktop-view {
+        display: block;
+      }
+      #desktop-view table {
+        width: 100%;
+        border-collapse: collapse;
+        background: rgba(34, 34, 34, 0.9);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      #desktop-view th,
+      #desktop-view td {
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #444;
+      }
+      #desktop-view th {
+        background: #111;
+        color: #fff;
+        font-size: 1.2em;
+        text-transform: uppercase;
+      }
+      /* Mobile Card View */
+      #mobile-view {
+        display: none;
+      }
+      .driver-card {
+        background: rgba(34, 34, 34, 0.9);
+        margin: 10px 0;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .driver-card img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        object-fit: cover;
+      }
+      .driver-details {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+      }
+      .driver-details span {
+        margin: 2px 0;
+      }
+      .points {
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+
+      /* Animation classes */
+      .fade-out {
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+      .fade-in {
+        opacity: 1;
+        transition: opacity 0.5s ease;
+      }
+
+      /* Pagination styling (reuse your filter button style) */
+      .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      /* Responsive: For screens 600px or less, show mobile view and hide desktop view */
+      @media (max-width: 600px) {
+        #desktop-view {
+          display: none;
+        }
+        #mobile-view {
+          display: block;
+        }
+      } /*boxx end*/
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>
+          <a href="../../index.html" style="color: aliceblue"
+            >Motorsport Exclusive</a
+          >
+        </h1>
+      </div>
+      <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </header>
+
+    <div class="category-links" id="menu" onmouseleave="closeMenu()">
+      <a href="../formula.html">Formula</a>
+      <a href="../../commingsoon.html">NASCAR</a>
+      <a href="../../commingsoon.html">Indy Car</a>
+      <a href="../../commingsoon.html">24 Le Mans</a>
+      <a href="../../commingsoon.html">Super Formula</a>
+      <a href="../../commingsoon.html">Rallying</a>
+      <a href="../../commingsoon.html">Moto GP</a>
+      <a href="../../commingsoon.html">IMSA</a>
+      <a href="../../commingsoon.html">GT Racing</a>
+      <a href="../../login.html" style="color: aqua">Account</a>
+    </div>
+
+    <div class="table-container">
+      <div class="filter-buttons">
+        <a href="f1driversstandings.html"
+          ><button class="filter">All Teams</button></a
+        >
+        <a href="f1driversstandingsinAlphabeticalorder.html"
+          ><button class="filter">Points</button></a
+        >
+        <a href="f1driversstandingsreversealphabeticalorder.html"
+          ><button class="filter">Z-A</button></a
+        >
+      </div>
+    </div>
+    <!--start-->
+    <div class="standings-container">
+      <!-- Desktop Table View -->
+      <div id="desktop-view">
+        <table id="driver-standings-table">
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Photo</th>
+              <th>Driver</th>
+              <th>Team</th>
+              <th>Points</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- Desktop table rows will be inserted dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Card View -->
+      <div id="mobile-view">
+        <div id="cards-container">
+          <!-- Mobile cards will be inserted dynamically -->
+        </div>
+      </div>
+
+      <div class="pagination">
+        <button id="prevBtn" class="filter">Previous</button>
+        <button id="nextBtn" class="filter">Next</button>
+      </div>
+    </div>
+    <!--end-->
+    <script>
+      // Dropdown menu functionality
+      function toggleMenu() {
+        const menu = document.getElementById("menu");
+        const menuToggle = document.querySelector(".menu-toggle");
+        menu.classList.toggle("show");
+        menuToggle.innerHTML = menu.classList.contains("show") ? "×" : "☰";
+      }
+
+      function closeMenu() {
+        const menu = document.getElementById("menu");
+        const menuToggle = document.querySelector(".menu-toggle");
+        menu.classList.remove("show");
+        menuToggle.innerHTML = "☰";
+      }
+
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("menu");
+        const menuToggle = document.querySelector(".menu-toggle");
+        if (!menu.contains(event.target) && !menuToggle.contains(event.target))
+          closeMenu();
+      });
+
+      const isTouchDevice =
+        "ontouchstart" in window || navigator.maxTouchPoints > 0;
+      if (!isTouchDevice)
+        document
+          .getElementById("menu")
+          .addEventListener("mouseleave", closeMenu);
+      //------------------------------------
+      //------------------------------------
+      // Function to map team names to CSS class names (as defined in your global CSS)
+      function getTeamClass(team) {
+        switch (team) {
+          case "Williams":
+            return "williams";
+          case "Aston Martin":
+            return "aston";
+          case "Mercedes":
+            return "mercedes";
+          case "Haas":
+            return "haas";
+          case "Sauber":
+            return "sauber";
+          case "Alpine":
+            return "alpine";
+          case "Racing Bulls":
+            return "racingbulls";
+          case "Ferrari":
+            return "ferrari";
+          case "Red Bull":
+            return "redbull";
+          case "McLaren":
+            return "mclaren";
+          default:
+            return "";
+        }
+      }
+
+      // 2025 F1 Driver Standings (with images and team info)
+      const drivers = [
+        {
+          position: 1,
+          name: "Alex Albon",
+          team: "Williams",
+          points: 0,
+          img: "images/alex_albon.jpg",
+        },
+        {
+          position: 2,
+          name: "Fernando Alonso",
+          team: "Aston Martin",
+          points: 0,
+          img: "images/fernando_alonso.jpg",
+        },
+        {
+          position: 3,
+          name: "Kimi Antonelli",
+          team: "Mercedes",
+          points: 0,
+          img: "images/kimi_antonelli.jpg",
+        },
+        {
+          position: 4,
+          name: "Oliver Bearman",
+          team: "Haas",
+          points: 0,
+          img: "images/oliver_bearman.jpg",
+        },
+        {
+          position: 5,
+          name: "Gabriel Bortoleto",
+          team: "Sauber",
+          points: 0,
+          img: "images/gabriel_bortoleto.jpg",
+        },
+        {
+          position: 6,
+          name: "Jack Doohan",
+          team: "Alpine",
+          points: 0,
+          img: "images/jack_doohan.jpg",
+        },
+        {
+          position: 7,
+          name: "Pierre Gasly",
+          team: "Alpine",
+          points: 0,
+          img: "images/pierre_gasly.jpg",
+        },
+        {
+          position: 8,
+          name: "Isack Hadjar",
+          team: "Racing Bulls",
+          points: 0,
+          img: "images/isack_hadjar.jpg",
+        },
+        {
+          position: 9,
+          name: "Lewis Hamilton",
+          team: "Ferrari",
+          points: 0,
+          img: "images/lewis_hamilton.jpg",
+        },
+        {
+          position: 10,
+          name: "Nico Hulkenberg",
+          team: "Sauber",
+          points: 0,
+          img: "images/nico_hulkenberg.jpg",
+        },
+        {
+          position: 11,
+          name: "Liam Lawson",
+          team: "Red Bull",
+          points: 0,
+          img: "images/liam_lawson.jpg",
+        },
+        {
+          position: 12,
+          name: "Charles Leclerc",
+          team: "Ferrari",
+          points: 0,
+          img: "images/charles_leclerc.jpg",
+        },
+        {
+          position: 13,
+          name: "Lando Norris",
+          team: "McLaren",
+          points: 0,
+          img: "images/lando_norris.jpg",
+        },
+        {
+          position: 14,
+          name: "Esteban Ocon",
+          team: "Haas",
+          points: 0,
+          img: "images/esteban_ocon.jpg",
+        },
+        {
+          position: 15,
+          name: "Oscar Piastri",
+          team: "McLaren",
+          points: 0,
+          img: "images/oscar_piastri.jpg",
+        },
+        {
+          position: 16,
+          name: "George Russell",
+          team: "Mercedes",
+          points: 0,
+          img: "images/george_russell.jpg",
+        },
+        {
+          position: 17,
+          name: "Carlos Sainz Jr.",
+          team: "Williams",
+          points: 0,
+          img: "images/carlos_sainz.jpg",
+        },
+        {
+          position: 18,
+          name: "Lance Stroll",
+          team: "Aston Martin",
+          points: 0,
+          img: "images/lance_stroll.jpg",
+        },
+        {
+          position: 19,
+          name: "Yuki Tsunoda",
+          team: "Racing Bulls",
+          points: 0,
+          img: "images/yuki_tsunoda.jpg",
+        },
+        {
+          position: 20,
+          name: "Max Verstappen",
+          team: "Red Bull",
+          points: 0,
+          img: "maxice.jpeg",
+        },
+      ];
+
+      let currentPage = 0;
+      const pageSize = 4;
+      const tableBody = document.getElementById("table-body");
+      const cardsContainer = document.getElementById("cards-container");
+
+      // Render desktop (table view)
+      function renderTablePage(page) {
+        tableBody.classList.add("fade-out");
+        setTimeout(() => {
+          tableBody.innerHTML = "";
+          const start = page * pageSize;
+          const end = start + pageSize;
+          const pageDrivers = drivers.slice(start, end);
+          pageDrivers.forEach((driver) => {
+            const row = document.createElement("tr");
+            row.className = getTeamClass(driver.team);
+            row.innerHTML = `
+          <td>${driver.position}</td>
+          <td><img src="${driver.img}" alt="${driver.name}" class="driver-image" /></td>
+          <td>${driver.name}</td>
+          <td>${driver.team}</td>
+          <td>${driver.points}</td>
+        `;
+            tableBody.appendChild(row);
+          });
+          tableBody.classList.remove("fade-out");
+          tableBody.classList.add("fade-in");
+          setTimeout(() => {
+            tableBody.classList.remove("fade-in");
+          }, 500);
+        }, 500);
+      }
+
+      // Render mobile (card view)
+      function renderCardsPage(page) {
+        cardsContainer.classList.add("fade-out");
+        setTimeout(() => {
+          cardsContainer.innerHTML = "";
+          const start = page * pageSize;
+          const end = start + pageSize;
+          const pageDrivers = drivers.slice(start, end);
+          pageDrivers.forEach((driver) => {
+            const card = document.createElement("div");
+            // Apply team-specific class to card for background color
+            card.className = "driver-card " + getTeamClass(driver.team);
+            card.innerHTML = `
+          <img src="${driver.img}" alt="${driver.name}" />
+          <div class="driver-details">
+            <span><strong>Pos:</strong> ${driver.position}</span>
+            <span><strong>Name:</strong> ${driver.name}</span>
+            <span><strong>Team:</strong> ${driver.team}</span>
+            <span class="points"><strong>Pts:</strong> ${driver.points}</span>
+          </div>
+        `;
+            cardsContainer.appendChild(card);
+          });
+          cardsContainer.classList.remove("fade-out");
+          cardsContainer.classList.add("fade-in");
+          setTimeout(() => {
+            cardsContainer.classList.remove("fade-in");
+          }, 500);
+        }, 500);
+      }
+
+      // Unified render function to update both views
+      function renderPage(page) {
+        renderTablePage(page);
+        renderCardsPage(page);
+      }
+
+      // Pagination event listeners
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        if ((currentPage + 1) * pageSize < drivers.length) {
+          currentPage++;
+          renderPage(currentPage);
+        }
+      });
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        if (currentPage > 0) {
+          currentPage--;
+          renderPage(currentPage);
+        }
+      });
+
+      // Initial render
+      renderPage(currentPage);
+      //------------------------------
+      //------------------------------
+    </script>
+  </body>
+</html>

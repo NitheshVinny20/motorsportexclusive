@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>F1 Driver Standings 2025 – Team Table</title>
+    <style>
+      /* Global Styles */
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
+
+      body {
+        font-family: "Orbitron", sans-serif;
+        background-color: #2a2a2a;
+        background-image: linear-gradient(
+            45deg,
+            rgba(0, 255, 128, 0.1) 25%,
+            transparent 25%,
+            transparent 75%,
+            rgba(0, 255, 128, 0.1) 75%
+          ),
+          linear-gradient(
+            -45deg,
+            rgba(0, 255, 128, 0.1) 25%,
+            transparent 25%,
+            transparent 75%,
+            rgba(0, 255, 128, 0.1) 75%
+          );
+        background-size: 10px 10px;
+        background-blend-mode: overlay;
+        color: #d0d0d0;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background: black;
+        padding: 15px 20px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(255, 0, 0, 0.5);
+        position: relative;
+        z-index: 1;
+      }
+
+      header h1 {
+        color: rgb(255, 255, 255);
+        margin: 0;
+        font-size: 1em;
+        text-align: left;
+      }
+
+      header a {
+        text-decoration: none;
+      }
+
+      @media (min-width: 1024px) {
+        header h1 {
+          font-size: 2em;
+        }
+      }
+      @media (max-width: 768px) {
+        header h1 {
+          font-size: 1.5em;
+        }
+      }
+
+      .menu-toggle {
+        font-size: 24px;
+        cursor: pointer;
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        background: none;
+        border: none;
+        color: white;
+      }
+
+      @media (min-width: 769px) {
+        .menu-toggle {
+          display: none;
+        }
+      }
+
+      .category-links {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: black;
+        box-shadow: 0 2px 5px rgba(255, 0, 0, 0.5);
+        padding: 10px 0;
+        max-height: 500px;
+        z-index: 1000;
+      }
+
+      .category-links a {
+        color: white;
+        font-size: 16px;
+        text-decoration: none;
+        padding: 8px 15px;
+        display: inline-block;
+        transition: background 0.3s;
+      }
+
+      .category-links a:hover {
+        background: #ff0000;
+      }
+
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: block;
+        }
+        .category-links {
+          display: none;
+          flex-direction: column;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease-in-out;
+        }
+        .category-links.show {
+          display: flex;
+          max-height: 500px;
+        }
+      }
+
+      /* Table Container */
+      .table-container {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 20px auto;
+      }
+
+      /* Filter Buttons */
+      .filter-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .filter {
+        border-radius: 15%;
+        background: black;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        box-shadow: 4px 4px 10px red;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .filter:hover {
+        border-radius: 50%;
+        box-shadow: 6px 6px 15px red;
+        font-size: larger;
+      }
+
+      /* Table Styling */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: rgba(34, 34, 34, 0.9);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #444;
+        transition: all 0.3s ease;
+      }
+
+      th {
+        background: #111;
+        color: #fff;
+        font-size: 1.2em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      tr:hover td {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.02);
+      }
+
+      .team-name {
+        font-weight: bold;
+        font-size: 1.1em;
+      }
+      .driver-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        object-fit: cover;
+        margin: 0 auto 5px;
+        display: block;
+      }
+      .points {
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+
+      /* Team-Specific Colors */
+      #alpine {
+        background-color: #0090d0;
+        color: #fff;
+      }
+      #alpine td {
+        border-color: #0055a4;
+      }
+      #alpine .team-name {
+        color: #fff;
+      }
+
+      #aston {
+        background-color: #00644b;
+        color: #fff;
+      }
+      #aston td {
+        border-color: #003d2e;
+      }
+      #aston .team-name {
+        color: #c0d6b8;
+      }
+
+      #ferrari {
+        background-color: #ff2800;
+        color: #fff;
+      }
+      #ferrari td {
+        border-color: #cc2200;
+      }
+      #ferrari .team-name {
+        color: #fff;
+      }
+
+      #haas {
+        background-color: #ffffff;
+        color: #000;
+      }
+      #haas td {
+        border-color: #cccccc;
+      }
+      #haas .team-name {
+        color: yellowgreen;
+      }
+
+      #mclaren {
+        background-color: #ff8000;
+        color: #fff;
+      }
+      #mclaren td {
+        border-color: #cc6600;
+      }
+      #mclaren .team-name {
+        color: #fff;
+      }
+
+      #mercedes {
+        background-color: #00d2be;
+        color: #000;
+      }
+      #mercedes td {
+        border-color: #00a896;
+      }
+      #mercedes .team-name {
+        color: #000;
+      }
+
+      #racingbulls {
+        background-color: #002d62;
+        color: #fff;
+      }
+      #racingbulls td {
+        border-color: #001f43;
+      }
+      #racingbulls .team-name {
+        color: #ff0000;
+      }
+
+      #redbull {
+        background-color: #1e41ff;
+        color: #fff;
+      }
+      #redbull td {
+        border-color: #1533cc;
+      }
+      #redbull .team-name {
+        color: #fff;
+      }
+
+      #sauber {
+        background-color: #0b1f18;
+        color: #fff;
+      }
+      #sauber td {
+        border-color: #071411;
+      }
+      #sauber .team-name {
+        color: #e1bee7;
+      }
+
+      #williams {
+        background-color: #005aff;
+        color: #fff;
+      }
+      #williams td {
+        border-color: #0044cc;
+      }
+      #williams .team-name {
+        color: #fff;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 600px) {
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+        thead {
+          display: none;
+        }
+        tr {
+          margin: 10px 0;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+          padding: 10px;
+        }
+        td {
+          border: none;
+          padding: 10px;
+          text-align: left;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        td::before {
+          content: attr(data-label);
+          font-weight: bold;
+          margin-right: 10px;
+          flex: 0 0 40%;
+        }
+        .team-name {
+          font-size: 1.2em;
+          text-align: center;
+          display: block;
+        }
+        .driver-image {
+          width: 40px;
+          height: 40px;
+        }
+        .points {
+          font-size: 1em;
+        }
+        td:nth-child(1) {
+          justify-content: center;
+        }
+        td:nth-child(2),
+        td:nth-child(4) {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        td:nth-child(3),
+        td:nth-child(5) {
+          border-top: 1px solid #444;
+        }
+        tr:hover td {
+          transform: none;
+        }
+
+        #alpine td::before,
+        #aston td::before,
+        #ferrari td::before,
+        #mclaren td::before,
+        #racingbulls td::before,
+        #redbull td::before,
+        #sauber td::before,
+        #williams td::before {
+          color: #fff;
+        }
+        #haas td::before,
+        #mercedes td::before {
+          color: #000;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>
+          <a href="../../index.html" style="color: aliceblue"
+            >Motorsport Exclusive</a
+          >
+        </h1>
+      </div>
+      <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </header>
+
+    <div class="category-links" id="menu" onmouseleave="closeMenu()">
+      <a href="../formula.html">Formula</a>
+      <a href="../../commingsoon.html">NASCAR</a>
+      <a href="../../commingsoon.html">Indy Car</a>
+      <a href="../../commingsoon.html">24 Le Mans</a>
+      <a href="../../commingsoon.html">Super Formula</a>
+      <a href="../../commingsoon.html">Rallying</a>
+      <a href="../../commingsoon.html">Moto GP</a>
+      <a href="../../commingsoon.html">IMSA</a>
+      <a href="../../commingsoon.html">GT Racing</a>
+      <a href="../../login.html" style="color: aqua">Account</a>
+    </div>
+
+    <div class="table-container">
+      <div class="filter-buttons">
+        <a href="f1driversstandings.html"
+          ><button class="filter">All Teams</button></a
+        >
+        <a href="f1driversstandingsinAlphabeticalorder.html"
+          ><button class="filter">Points</button></a
+        >
+        <a href="f1driversstandingsreversealphabeticalorder.html"
+          ><button class="filter">Z-A</button></a
+        >
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>Driver 1</th>
+            <th>Points</th>
+            <th>Driver 2</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="williams">
+            <td data-label="Team" class="team-name">Williams</td>
+            <td data-label="Driver 1">
+              <img
+                src="images/albon.jpg"
+                alt="Alexander Albon"
+                class="driver-image"
+              />
+              Alexander Albon
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+            <td data-label="Driver 2">
+              <img
+                src="images/sainz.jpg"
+                alt="Carlos Sainz Jr."
+                class="driver-image"
+              />
+              Carlos Sainz Jr.
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+          </tr>
+          <tr id="sauber">
+            <td data-label="Team" class="team-name">Sauber</td>
+            <td data-label="Driver 1">
+              <img
+                src="images/hulkenberg.jpg"
+                alt="Nico Hulkenberg"
+                class="driver-image"
+              />
+              Nico Hulkenberg
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+            <td data-label="Driver 2">
+              <img
+                src="images/bortoleto.jpg"
+                alt="Gabriel Bortoleto"
+                class="driver-image"
+              />
+              Gabriel Bortoleto
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+          </tr>
+          <tr id="redbull">
+            <td data-label="Team" class="team-name">Red Bull Racing</td>
+            <td data-label="Driver 1">
+              <img
+                src="maxice.jpeg"
+                alt="Max Verstappen"
+                class="driver-image"
+              />
+              Max Verstappen
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+            <td data-label="Driver 2">
+              <img
+                src="images/lawson.jpg"
+                alt="Liam Lawson"
+                class="driver-image"
+              />
+              Liam Lawson
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+          </tr>
+          <tr id="racingbulls">
+            <td data-label="Team" class="team-name">Racing Bulls</td>
+            <td data-label="Driver 1">
+              <img
+                src="images/tsunoda.jpg"
+                alt="Yuki Tsunoda"
+                class="driver-image"
+              />
+              Yuki Tsunoda
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+            <td data-label="Driver 2">
+              <img
+                src="images/hadjar.jpg"
+                alt="Isack Hadjar"
+                class="driver-image"
+              />
+              Isack Hadjar
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+          </tr>
+          <tr id="mercedes">
+            <td data-label="Team" class="team-name">Mercedes</td>
+            <td data-label="Driver 1">
+              <img
+                src="images/russell.jpg"
+                alt="George Russell"
+                class="driver-image"
+              />
+              George Russell
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+            <td data-label="Driver 2">
+              <img
+                src="images/antonelli.jpg"
+                alt="Andrea Kimi Antonelli"
+                class="driver-image"
+              />
+              Andrea Kimi Antonelli
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+          </tr>
+          <tr id="mclaren">
+            <td data-label="Team" class="team-name">McLaren</td>
+            <td data-label="Driver 1">
+              <img
+                src="images/norris.jpg"
+                alt="Lando Norris"
+                class="driver-image"
+              />
+              Lando Norris
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+            <td data-label="Driver 2">
+              <img
+                src="images/piastri.jpg"
+                alt="Oscar Piastri"
+                class="driver-image"
+              />
+              Oscar Piastri
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+          </tr>
+          <tr id="haas">
+            <td data-label="Team" class="team-name">Haas</td>
+            <td data-label="Driver 1">
+              <img
+                src="images/bearman.jpg"
+                alt="Ollie Bearman"
+                class="driver-image"
+              />
+              Ollie Bearman
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+            <td data-label="Driver 2">
+              <img
+                src="images/ocon.jpg"
+                alt="Esteban Ocon"
+                class="driver-image"
+              />
+              Esteban Ocon
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+          </tr>
+          <tr id="ferrari">
+            <td data-label="Team" class="team-name">Ferrari</td>
+            <td data-label="Driver 1">
+              <img
+                src="images/leclerc.jpg"
+                alt="Charles Leclerc"
+                class="driver-image"
+              />
+              Charles Leclerc
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+            <td data-label="Driver 2">
+              <img
+                src="images/hamilton.jpg"
+                alt="Lewis Hamilton"
+                class="driver-image"
+              />
+              Lewis Hamilton
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+          </tr>
+          <tr id="aston">
+            <td data-label="Team" class="team-name">Aston Martin</td>
+            <td data-label="Driver 1">
+              <img
+                src="images/alonso.jpg"
+                alt="Fernando Alonso"
+                class="driver-image"
+              />
+              Fernando Alonso
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+            <td data-label="Driver 2">
+              <img
+                src="images/stroll.jpg"
+                alt="Lance Stroll"
+                class="driver-image"
+              />
+              Lance Stroll
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+          </tr>
+          <tr id="alpine">
+            <td data-label="Team" class="team-name">Alpine</td>
+            <td data-label="Driver 1">
+              <img
+                src="images/gasly.jpg"
+                alt="Pierre Gasly"
+                class="driver-image"
+              />
+              Pierre Gasly
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+            <td data-label="Driver 2">
+              <img
+                src="images/doohan.jpg"
+                alt="Jack Doohan"
+                class="driver-image"
+              />
+              Jack Doohan
+            </td>
+            <td data-label="Points" class="points">0 pts</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      // Dropdown menu functionality
+      function toggleMenu() {
+        const menu = document.getElementById("menu");
+        const menuToggle = document.querySelector(".menu-toggle");
+        menu.classList.toggle("show");
+        menuToggle.innerHTML = menu.classList.contains("show") ? "×" : "☰";
+      }
+
+      function closeMenu() {
+        const menu = document.getElementById("menu");
+        const menuToggle = document.querySelector(".menu-toggle");
+        menu.classList.remove("show");
+        menuToggle.innerHTML = "☰";
+      }
+
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("menu");
+        const menuToggle = document.querySelector(".menu-toggle");
+        if (!menu.contains(event.target) && !menuToggle.contains(event.target))
+          closeMenu();
+      });
+
+      const isTouchDevice =
+        "ontouchstart" in window || navigator.maxTouchPoints > 0;
+      if (!isTouchDevice)
+        document
+          .getElementById("menu")
+          .addEventListener("mouseleave", closeMenu);
+    </script>
+  </body>
+</html>

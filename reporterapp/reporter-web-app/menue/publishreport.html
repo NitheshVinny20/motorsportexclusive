@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Publish Report</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background: #1a1a2e;
+        color: #e0e0e0;
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        color: #e94560;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .report-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .report-type {
+        background: rgba(22, 33, 62, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        transition: transform 0.3s ease;
+        position: relative; /* For lock overlay */
+      }
+
+      .report-type:hover {
+        transform: translateY(-5px);
+      }
+
+      .report-type h2 {
+        color: #fff;
+        margin-bottom: 1rem;
+      }
+
+      .report-box {
+        background: #16213e;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+        position: relative; /* For positioning within */
+      }
+
+      .report-box p {
+        color: #a0aec0;
+        margin-bottom: 0.5rem;
+      }
+
+      .report-link {
+        color: #e94560;
+        text-decoration: none;
+        font-weight: 700;
+        transition: color 0.3s ease;
+      }
+
+      .report-link:hover {
+        color: #ff6b6b;
+      }
+
+      /* Dropdown styling */
+      .report-dropdown {
+        width: 100%;
+        padding: 0.5rem;
+        background: #16213e;
+        color: #e0e0e0;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .report-dropdown option {
+        background: #16213e;
+        color: #e0e0e0;
+      }
+
+      /* Lock overlay */
+      .lock-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 12px; /* Match report-type border */
+        z-index: 1; /* Above content */
+      }
+
+      .lock-overlay img {
+        width: 100px;
+        height: 100px;
+        opacity: 0.5; /* Translucent lock */
+      }
+
+      /* Dim the locked section */
+      .locked {
+        opacity: 0.6;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .report-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Publish Report</h1>
+      <div class="report-grid">
+        <!-- Report Type 1 -->
+        <div class="report-type">
+          <h2>Daily Brief</h2>
+          <div class="report-box">
+            <p>
+              <a href="../dailybrief.html" class="report-link"
+                ><strong>Formula-1</strong></a
+              >
+            </p>
+            <p>----</p>
+            <p><a href="../r3.html" class="report-link">Moto GP</a></p>
+            <p>More will be added</p>
+          </div>
+        </div>
+
+        <!-- Report Type 2 (Locked Weekly Summary with Dropdown) -->
+        <div class="report-type locked">
+          <h2>Weekly Summary</h2>
+          <div class="report-box">
+            <select
+              class="report-dropdown"
+              onchange="if(this.value) window.location.href=this.value"
+            >
+              <option value="">Select a report</option>
+              <option value="../r1.html">Formula-1</option>
+
+              <!-- No redirect for r2 -->
+              <option value="../r3.html">NAS CAR</option>
+              <!-- Add more options here -->
+              <option value="../r4.html">GT Racing</option>
+            </select>
+          </div>
+          <!-- Lock overlay to block interactions 
+          <div class="lock-overlay">
+            <img src="../lock2.png" alt="Lock Icon" />
+          </div>
+          <br /><br />
+          <p>More will be added</p>
+        </div>-->
+
+        <!-- Report Type 3 -->
+        <div class="report-type">
+          <h2>Special Report</h2>
+          <div class="report-box">
+            <p>
+              <a href="../r1.html" class="report-link"
+                ><strong>Formula-1</strong></a
+              >
+            </p>
+            <p>----</p>
+            <p><a href="../r3.html" class="report-link">Moto GP</a></p>
+            <p>More will be added</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // No additional JavaScript needed beyond the onchange event in the dropdown.
+      // The lock overlay prevents interaction while present.
+    </script>
+  </body>
+</html>
