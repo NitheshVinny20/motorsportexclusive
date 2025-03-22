@@ -46,7 +46,7 @@
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
         text-align: center;
         transition: transform 0.3s ease;
-        position: relative; /* For lock overlay */
+        position: relative;
       }
 
       .report-type:hover {
@@ -63,7 +63,7 @@
         padding: 1rem;
         border-radius: 8px;
         margin-top: 1rem;
-        position: relative; /* For positioning within */
+        position: relative;
       }
 
       .report-box p {
@@ -82,64 +82,98 @@
         color: #ff6b6b;
       }
 
-      /* Dropdown styling */
-      .report-dropdown {
-        width: 100%;
-        padding: 0.5rem;
-        background: #16213e;
-        color: #e0e0e0;
-        border: none;
-        border-radius: 4px;
-        font-size: 1rem;
-        cursor: pointer;
-      }
-
-      .report-dropdown option {
-        background: #16213e;
-        color: #e0e0e0;
-      }
-
-      /* Lock overlay */
       .lock-overlay {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        background: rgba(0, 0, 0, 0.5);
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 12px; /* Match report-type border */
-        z-index: 1; /* Above content */
+        border-radius: 12px;
+        z-index: 1;
       }
 
       .lock-overlay img {
         width: 100px;
         height: 100px;
-        opacity: 0.5; /* Translucent lock */
+        opacity: 0.5;
       }
 
-      /* Dim the locked section */
-      .locked {
-        opacity: 0.6;
+      .button-back {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1000;
       }
 
-      /* Responsive adjustments */
+      .back-button {
+        display: inline-block;
+        padding: 10px 20px;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 30px;
+        font-family: "Roboto", sans-serif;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0px 2px 5px rgba(233, 69, 96, 0.3);
+      }
+
+      .back-button:hover {
+        background-color: #c1354d;
+      }
+
+      .back-button:active {
+        background-color: #a12b41;
+        box-shadow: 0px 1px 3px rgba(233, 69, 96, 0.2);
+      }
+
+      /* Dynamic "More" styling */
+      .more-dynamic {
+        color: #e94560;
+        font-style: italic;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
       @media (max-width: 768px) {
         .report-grid {
           grid-template-columns: 1fr;
         }
       }
+
+      @media (max-width: 600px) {
+        .back-button {
+          padding: 8px 16px;
+          font-size: 16px;
+        }
+      }
     </style>
   </head>
   <body>
+    <div class="button-back">
+      <a href="../index.html" class="back-button">⬅️</a>
+    </div>
     <div class="container">
       <h1>Publish Report</h1>
       <div class="report-grid">
-        <!-- Report Type 1 -->
+        <!-- Daily News (Updated from Daily Brief) -->
         <div class="report-type">
-          <h2>Daily Brief</h2>
+          <h2>Daily News</h2>
           <div class="report-box">
             <p>
               <a href="../dailybrief.html" class="report-link"
@@ -147,39 +181,14 @@
               >
             </p>
             <p>----</p>
-            <p><a href="../r3.html" class="report-link">Moto GP</a></p>
-            <p>More will be added</p>
+            <p><a href="../index.html" class="report-link">Moto GP</a></p>
+            <p class="more-dynamic">More coming soon...</p>
           </div>
         </div>
 
-        <!-- Report Type 2 (Locked Weekly Summary with Dropdown) -->
-        <div class="report-type locked">
-          <h2>Weekly Summary</h2>
-          <div class="report-box">
-            <select
-              class="report-dropdown"
-              onchange="if(this.value) window.location.href=this.value"
-            >
-              <option value="">Select a report</option>
-              <option value="../r1.html">Formula-1</option>
-
-              <!-- No redirect for r2 -->
-              <option value="../r3.html">NAS CAR</option>
-              <!-- Add more options here -->
-              <option value="../r4.html">GT Racing</option>
-            </select>
-          </div>
-          <!-- Lock overlay to block interactions 
-          <div class="lock-overlay">
-            <img src="../lock2.png" alt="Lock Icon" />
-          </div>
-          <br /><br />
-          <p>More will be added</p>
-        </div>-->
-
-        <!-- Report Type 3 -->
+        <!-- Weekly Summary (Updated to match Daily News) -->
         <div class="report-type">
-          <h2>Special Report</h2>
+          <h2>Weekly Summary</h2>
           <div class="report-box">
             <p>
               <a href="../forms/formlaweekly.html" class="report-link"
@@ -188,15 +197,31 @@
             </p>
             <p>----</p>
             <p><a href="../index.html" class="report-link">Moto GP</a></p>
-            <p>More will be added</p>
+            <p class="more-dynamic">More coming soon...</p>
+          </div>
+        </div>
+
+        <!-- Special Report (Updated to match Daily News) -->
+        <div class="report-type">
+          <h2>Special Report</h2>
+          <div class="report-box">
+            <p>
+              <a
+                href="/reporterapp/reporter-web-app/index.html"
+                class="report-link"
+                ><strong>Formula-1</strong></a
+              >
+            </p>
+            <p>----</p>
+            <p><a href="../index.html" class="report-link">Moto GP</a></p>
+            <p class="more-dynamic">More coming soon...</p>
           </div>
         </div>
       </div>
     </div>
 
     <script>
-      // No additional JavaScript needed beyond the onchange event in the dropdown.
-      // The lock overlay prevents interaction while present.
+      // No additional JavaScript needed.
     </script>
   </body>
 </html>
