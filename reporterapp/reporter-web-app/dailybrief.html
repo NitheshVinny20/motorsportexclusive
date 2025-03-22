@@ -38,12 +38,13 @@
         border: none;
         font-size: 16px;
         margin: 0;
-        background: #fff; /* Default white background for visibility */
-        color: #000; /* Black text for contrast */
+        background: #fff;
+        color: #000;
+        box-sizing: border-box;
       }
       textarea {
-        height: 50px; /* Larger height for both Title and Content */
-        resize: vertical; /* Allows vertical resizing */
+        height: 50px;
+        resize: vertical;
       }
       input:focus,
       textarea:focus {
@@ -90,48 +91,103 @@
         clip: rect(0, 0, 0, 0);
         border: 0;
       }
+      .button-back {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1000;
+      }
+
+      .back-button {
+        display: inline-block;
+        padding: 10px 20px;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 30px;
+        font-family: "Roboto", sans-serif;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0px 2px 5px rgba(233, 69, 96, 0.3);
+      }
+
+      .back-button:hover {
+        background-color: #c1354d;
+      }
+
+      .back-button:active {
+        background-color: #a12b41;
+        box-shadow: 0px 1px 3px rgba(233, 69, 96, 0.2);
+      }
+
+      /* Dynamic "More" styling */
+      .more-dynamic {
+        color: #e94560;
+        font-style: italic;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .report-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
       @media (max-width: 600px) {
-        .container {
-          padding: 20px;
-        }
-        #googleForm {
-          gap: 10px;
-        }
-        input,
-        textarea {
-          padding: 10px;
-          font-size: 14px;
-        }
-        button {
-          padding: 8px;
+        .back-button {
+          padding: 8px 16px;
           font-size: 16px;
         }
       }
     </style>
   </head>
   <body>
+    <div class="button-back">
+      <a
+        href="/reporterapp/reporter-web-app/menue/publishreport.html"
+        class="back-button"
+        >🔙</a
+      >
+    </div>
     <div class="container">
-      <div><h3 style="text-align: center">motorsport_exclusive</h3></div>
+      <div>
+        <h3 style="text-align: center">
+          motorsport_exclusive<br />
+          <p style="color: aqua">Daily News</p>
+        </h3>
+      </div>
       <h2 style="color: red">Submit Collected Data</h2>
       <br />
       <form id="googleForm">
         <label for="Title" class="sr-only">Title</label>
         <textarea
           id="Title"
-          name="entry.720882568"
+          name="entry.1661086791"
           placeholder="Title"
           required
         ></textarea>
         <label for="Content" class="sr-only">Content</label>
         <textarea
           id="Content"
-          name="entry.606477800"
+          name="entry.1737543100"
           placeholder="Content"
           required
         ></textarea>
         <button type="submit" id="submitButton">Submit</button>
       </form>
-      <p id="successMessage">✅ Your response has been recorded!</p>
+      <p id="successMessage">✅ Your response has been recorded 📝</p>
     </div>
 
     <script>
@@ -156,7 +212,6 @@
         checkFormValidity();
       });
 
-      // Initially disable the submit button
       submitButton.disabled = true;
 
       document
