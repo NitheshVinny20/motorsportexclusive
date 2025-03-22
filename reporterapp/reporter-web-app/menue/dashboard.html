@@ -153,9 +153,74 @@
           margin-top: 5px;
         }
       }
+      .button-back {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1000;
+      }
+
+      .back-button {
+        display: inline-block;
+        padding: 10px 20px;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 30px;
+        font-family: "Roboto", sans-serif;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0px 2px 5px rgba(233, 69, 96, 0.3);
+      }
+
+      .back-button:hover {
+        background-color: #c1354d;
+      }
+
+      .back-button:active {
+        background-color: #a12b41;
+        box-shadow: 0px 1px 3px rgba(233, 69, 96, 0.2);
+      }
+
+      /* Dynamic "More" styling */
+      .more-dynamic {
+        color: #e94560;
+        font-style: italic;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .report-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .back-button {
+          padding: 8px 16px;
+          font-size: 16px;
+        }
+      }
     </style>
   </head>
   <body>
+    <div class="button-back">
+      <a href="/reporterapp/reporter-web-app/index.html" class="back-button"
+        >🔙</a
+      >
+    </div>
     <div class="container">
       <h3>motorsport_exclusive</h3>
       <h1>Reporter Calendar - 2025</h1>
